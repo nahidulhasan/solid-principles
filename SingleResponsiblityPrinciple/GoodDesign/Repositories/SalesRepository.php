@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\Repositories;
+namespace Report\Repositories;
 
 use DB;
 

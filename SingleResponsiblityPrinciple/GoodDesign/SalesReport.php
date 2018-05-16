@@ -2,8 +2,7 @@
 
 namespace Report;
 
-use Acme\SalesOutputInterface;
-use Acme\Repositories\SalesRepository;
+use Report\Repositories\SalesRepository;
 
 class SalesReport
 {
