@@ -1,4 +1,4 @@
-## SOLID Principles - simple and easy explanation
+# SOLID Principles - simple and easy explanation
 
 SOLID Principles is a coding standard that all developers should have a clear 
 concept for developing software in a proper way to avoid a bad design. 
