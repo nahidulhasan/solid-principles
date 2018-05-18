@@ -6,7 +6,7 @@ use Auth;
 use DB;
 
 
-class SalesReporterWithComments
+class SalesReportWithComments
 {
     public function between($startDate, $endDate)
     {
