@@ -1,27 +1,4 @@
 <?php
-/**
- * Depend on Abstractions not on concretions
- */
-
-
-
-/*class MySQLConnection{
-
-}
-
-
- private $dbConnection;
-
-class PasswordReminder
-{
-    public  function __construct(MySQLConnection $dbConnection)
-    {
-       $this->dbConnection =  $dbConnection;
-    }
-
-}*/
-
-
 
 interface ConnectionInterface
 {
