@@ -26,19 +26,104 @@ for beginners to understand. Let's go through each principle one by one:
 
 One class should only serve one purpose, this does not imply that each class 
 should have only have one method but they should all relate directly to the 
-responsibility of the class.All the methods and properties should all work towards 
-the same goal. When a class serves for multiple purposes/ responsibility then it should 
-be made into a new class.
+responsibility of the class.All the methods and properties should all work towards the same goal. When a class serves for multiple purposes/ responsibility then it should be made into a new class.
 
+Look the following code :
+
+```php
+namespace Report;
+use Auth;
+use DB;
+class SalesReport
+{
+    public function between($startDate, $endDate)
+    {
+        if (! Auth::check()) {
+            throw new \Exception('Authentication required for reporting!');
+        }
+        $sales = $this->queryDBForSales($startDate, $endDate);
+        return $this->format($sales);
+    }
+
+    protected function queryDBForSales($startDate, $endDate)
+    {
+         // If we would update our persistence layer in the future,
+        // we would have to do changes here too. <=> reason to change!
+        return DB::table('sales')->whereBetween('created_at', [$startDate, $endDate])->sum('charge') / 100;
+    }
+
+    protected function format($sales)
+    {
+        // If we changed the way we want to format the output,
+        // we would have to make changes here. <=> reason to change!
+        return '<h1>Sales: ' . $sales . '</h1>';
+    }
+}
+
+```
+
+Above class violates single responsibility principle. Why should this class be interested in the authenticated user? This is application logic! It should be moved to a controller.
+
+Next method is related to persistence layer.The persistence layer deals with persisting (storing and retrieving) data from a data store (such as a database, for example).So it is not the responsibility of this class.
+
+Next method format is also not the responsibility of this class.Because we may need different format data such as XML, JSON, HTML etc.
+
+So finally the refactored code will be described as below :
+
+
+```php
+
+namespace Report;
+use Report\Repositories\SalesRepository;
+class SalesReport
+{
+  protected $repo;
+  protected $formatter;
+  public function __construct(SalesRepository $repo, SalesOutputInterface $formatter)
+  {
+    $this->repo = $repo;
+    $this->formatter = $formatter;
+  }
+  public function between($startDate, $endDate)
+  {
+    $sales = $this->repo->between($startDate, $endDate);
+    return $this->formatter->output($sales);
+  }
+}
+// SalesOutputInterface
+namespace Report;
+interface SalesOutputInterface
+{
+  public function output();
+}
+// HtmlOutput class
+namespace Report;
+class HtmlOutput implements SalesOutputInterface
+{
+  public function output($sales)
+  {
+    return '<h1>Sales: ' . $sales . '</h1>';
+  }
+}
+// SalesRepository
+namespace Report\Repositories;
+use DB;
+class SalesRepository
+{
+    protected function between($startDate, $endDate)
+    {
+        return DB::table('sales')->whereBetween('created_at', [$startDate, $endDate])->sum('charge') / 100;
+    }
+}
+
+```
 
 ### Open-closed Principle :
 
 >Entities should be open for extension, but closed for modification.
 
 Software entities (classes, modules, functions, etc.) be extendable without 
-actually changing the contents of the class you're extending. If we could follow this 
-principle strongly enough, it is possible to then modify the behavior of our code without
-ever touching a piece of original code.
+actually changing the contents of the class you're extending. If we could follow this principle strongly enough, it is possible to then modify the behavior of our code without ever touching a piece of original code.
 
 ### Liskov Substitution Principle :
 
@@ -86,7 +171,7 @@ class PasswordReminder
      * @var MySQLConnection
      */
      private $dbConnection;
-public function __construct(MySQLConnection $dbConnection) 
+     public function __construct(MySQLConnection $dbConnection) 
     {
       $this->dbConnection = $dbConnection;
     }
