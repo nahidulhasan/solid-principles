@@ -1,9 +1,9 @@
 <?php
 
-class Rectangle implements AreaInterface {
+class Rectangle implements AreaInterface
+{
 
     public $width;
-
     public $height;
 
     public function __construct($width, $height)

@@ -2,17 +2,14 @@
 
 class AreaCalculator
 {
-    public function calculate($shapes)
-    {
-        foreach ($shapes as $shape) {
-
-            if ($shape instanceof Rectangle) {
-                $areas[] = $shape->width * $shape->height;
-            } else {
-                $areas[] = $shape->radius ** 2 * pi();
-            }
+    public function calculate($shape)
+    { 
+        if ($shape instanceof Rectangle) {
+            $area = $shape->width * $shape->height;
+        } else {
+            $area = $shape->radius * $shape->radius * pi();
         }
-
-        return array_sum($areas);
+       
+        return $area;
     }
 }

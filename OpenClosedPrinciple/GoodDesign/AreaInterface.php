@@ -1,6 +1,5 @@
 <?php
-interface AreaInterface{
-
+interface AreaInterface
+{
     public  function calculateArea();
-
 }
