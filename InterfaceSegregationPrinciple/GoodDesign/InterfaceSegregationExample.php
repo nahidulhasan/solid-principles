@@ -1,14 +1,18 @@
 <?php
-interface WorkAbleInterface{
+
+interface WorkAbleInterface
+{
     public  function work();
 }
 
-interface SleepAbleInterface{
+interface SleepAbleInterface
+{
     public  function  sleep();
 }
 
 
-class HumanWorker implements WorkAbleInterface, SleepAbleInterface{
+class HumanWorker implements WorkAbleInterface, SleepAbleInterface
+{
 
     public  function work()
     {
@@ -21,7 +25,8 @@ class HumanWorker implements WorkAbleInterface, SleepAbleInterface{
 
 }
 
-class AndroidWorker implements WorkAbleInterface{
+class AndroidWorker implements WorkAbleInterface
+{
 
     public  function work()
     {
