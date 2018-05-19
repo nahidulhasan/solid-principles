@@ -69,7 +69,6 @@ Next method format is also not the responsibility of this class.Because we may n
 
 So finally the refactored code will be described as below :
 
-
 ```php
 namespace Report;
 use Report\Repositories\SalesRepository;
@@ -221,9 +220,45 @@ Now we can find square's area without modify AreaCalculator class.
 
 >Derived classes must be substitutable for their base classes.
  
-If you create a class with a dependency of a given type, you should be able to 
-provide an object of that type or any of its subclasses without introducing unexpected 
-results and without the dependent class knowing the actual type of the provided dependency.
+It states that any implementation of an abstraction (interface) should be substitutable in any place that the abstraction is accepted. Basically it takes care that while coding using interfaces in our code, we not only have a contract of input that the interface receives but also the output returned by different Classes implementing that interface; they should be of same type.
+
+A code snippet to show the LSP voilation :
+
+```php
+interface LessonRepositoryInterface
+{
+    /**
+     * Fetch all records.
+     *
+     * @return array
+     */
+    public function getAll();
+}
+
+class FileLessonRepository implements LessonRepositoryInterface
+{
+    public function getAll()
+    {
+        // return through file system
+        return [];
+    }
+}
+
+class DbLessonRepository implements LessonRepositoryInterface
+{
+    public function getAll()
+    {
+        /*
+            Violates LSP because:
+              - the return type is different
+              - the consumer of this subclass and FileLessonRepository won't work identically
+         */
+        // return Lesson::all();
+        // to fix this
+        return Lesson::all()->toArray();
+    }
+}
+```
 
 
 ## Interface Segregation Principle :
