@@ -59,7 +59,6 @@ class SalesReport
         return '<h1>Sales: ' . $sales . '</h1>';
     }
 }
-
 ```
 
 Above class violates single responsibility principle. Why should this class be interested in the authenticated user? This is application logic! It should be moved to a controller.
@@ -72,7 +71,6 @@ So finally the refactored code will be described as below :
 
 
 ```php
-
 namespace Report;
 use Report\Repositories\SalesRepository;
 class SalesReport
@@ -115,7 +113,6 @@ class SalesRepository
         return DB::table('sales')->whereBetween('created_at', [$startDate, $endDate])->sum('charge') / 100;
     }
 }
-
 ```
 
 ## Open-closed Principle :
@@ -128,7 +125,6 @@ actually changing the contents of the class you're extending. If we could follow
 Please look at the following code :
 
 ```php
-<?php
 class Rectangle
 {
     public $width;
@@ -165,13 +161,11 @@ $circle = new Circle(5);
 $rect = new Rectangle(8,5);
 $obj = new AreaCalculator();
 echo $obj->calculate($circle);
-
 ```
 
 Now if want to calculate area for Square we have to modify calculate method in AreaCalculator class. It breaks the openclosed principle. According to this princple we can not modify we can extend. So How we fix this problem see the following code :
 
 ```php
-
 interface AreaInterface
 {
     public  function calculateArea();
@@ -218,7 +212,6 @@ class AreaCalculator
 $circle = new Circle(5);
 $obj = new AreaCalculator();
 echo $obj->area($circle);
-
 ```
 
 Now we can find square's area without modify AreaCalculator class.
@@ -241,15 +234,11 @@ This rule means that when one class depends upon another, the number
 of members in the interface that is visible to the dependent class should be minimised.
 
 ```php
-
-<?php
-
 interface workerInterface
 {
     public  function work();
     public  function  sleep();
 }
-
 
 class HumanWorker implements workerInterface
 {
@@ -277,14 +266,11 @@ class AndroidWorker implements workerInterface
         // No need
     }
 }
-
 ```
 
 In the above code, AnodroidWorker nod need sleep, but the class have to immplement the sleep method because we know that all methods are abstract in interface. It breaks the Interface segregation law. How we can fix it please see the following code :
 
 ```php
-<?php
-
 interface WorkAbleInterface
 {
     public  function work();
@@ -295,10 +281,8 @@ interface SleepAbleInterface
     public  function  sleep();
 }
 
-
 class HumanWorker implements WorkAbleInterface, SleepAbleInterface
 {
-
     public  function work()
     {
         var_dump('works');
@@ -307,19 +291,15 @@ class HumanWorker implements WorkAbleInterface, SleepAbleInterface
     {
         var_dump('sleep');
     }
-
 }
 
 class AndroidWorker implements WorkAbleInterface
 {
-
     public  function work()
     {
         var_dump('works');
     }
-
 }
-
 ```
 
 
@@ -333,7 +313,6 @@ Or simply : Depend on Abstractions not on concretions
 
 
 ```php
-
 class MySQLConnection
 {
 /**
@@ -344,7 +323,6 @@ class MySQLConnection
       var_dump('MYSQL Connection');
    }
 }
-
 
 class PasswordReminder
 {    
@@ -357,7 +335,6 @@ class PasswordReminder
       $this->dbConnection = $dbConnection;
     }
 }
-
 
 ```
 
@@ -373,20 +350,19 @@ If we want to change connection from MySQLConnection to MongoDBConnection, we ha
 PasswordReminder class should depend upon on Abstractions not on concretions. But How can we do it ? Please see the following example :
 
 ```php
-
 interface ConnectionInterface
 {
    public function connect();
 }
 class DbConnection implements ConnectionInterface
 {
- /**
-  * db connection
-  */
- public function connect()
- {
-   var_dump('MYSQL Connection');
- }
+   /**
+   * db connection
+   */
+   public function connect()
+   {
+     var_dump('MYSQL Connection');
+   }
 }
 class PasswordReminder
 {
@@ -399,8 +375,6 @@ class PasswordReminder
       $this->dbConnection = $dbConnection;
     }
 }
-
-
 ```
 
 In the above code we want to change connection from MySQLConnection to MongoDBConnection, 
