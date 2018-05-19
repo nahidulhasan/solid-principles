@@ -418,5 +418,5 @@ In the above code, we want to change the connection from MySQLConnection to Mong
 
 Thanks for reading.
 
-If you want more details you can watch this [vedio](https://laracasts.com/series/solid-principles-in-php)
+If you want more details you can watch this [video](https://laracasts.com/series/solid-principles-in-php)
 
