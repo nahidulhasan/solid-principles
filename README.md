@@ -86,14 +86,14 @@ class SalesReport
   }
 }
 
-// SalesOutputInterface
+
 namespace Report;
 interface SalesOutputInterface
 {
   public function output();
 }
 
-// HtmlOutput class
+
 namespace Report;
 class HtmlOutput implements SalesOutputInterface
 {
@@ -103,7 +103,6 @@ class HtmlOutput implements SalesOutputInterface
   }
 }
 
-// SalesRepository
 namespace Report\Repositories;
 use DB;
 class SalesRepository
@@ -134,6 +133,7 @@ class Rectangle
         $this->height = $height;
     }
 }
+
 class Circle
 {
     public $radius;
@@ -142,6 +142,7 @@ class Circle
         $this->radius = $radius;
     }
 }
+
 class AreaCalculator
 {
     public function calculate($shape)
@@ -388,6 +389,7 @@ interface ConnectionInterface
 {
    public function connect();
 }
+
 class DbConnection implements ConnectionInterface
 {
    /**
@@ -398,6 +400,7 @@ class DbConnection implements ConnectionInterface
      var_dump('MYSQL Connection');
    }
 }
+
 class PasswordReminder
 {
     /**
