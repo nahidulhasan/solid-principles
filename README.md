@@ -20,7 +20,7 @@ I'm going to try to explain SOLID Principles in simplest way so that it's easy
 for beginners to understand. Let's go through each principle one by one:
 
 
-### Single Responsibility Principle :
+## Single Responsibility Principle :
 
 >A class should have one, and only one, reason to change.
 
@@ -118,7 +118,7 @@ class SalesRepository
 
 ```
 
-### Open-closed Principle :
+## Open-closed Principle :
 
 >Entities should be open for extension, but closed for modification.
 
@@ -224,7 +224,7 @@ echo $obj->area($circle);
 Now we can find square's area without modify AreaCalculator class.
 
 
-### Liskov Substitution Principle :
+## Liskov Substitution Principle :
 
 >Derived classes must be substitutable for their base classes.
  
@@ -233,7 +233,7 @@ provide an object of that type or any of its subclasses without introducing unex
 results and without the dependent class knowing the actual type of the provided dependency.
 
 
-### Interface Segregation Principle :
+## Interface Segregation Principle :
 
 >A Client should not be forced to implement an interface that it doesn't use.
 
@@ -241,7 +241,7 @@ This rule means that when one class depends upon another, the number
 of members in the interface that is visible to the dependent class should be minimised.
 
 
-### Dependency Inversion Principle :
+## Dependency Inversion Principle :
 
 > High-level modules should not depend on low-level modules. Both should depend on abstractions.
 
