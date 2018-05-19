@@ -172,6 +172,11 @@ Now if want to calculate area for Square we have to modify calculate method in A
 
 ```php
 
+interface AreaInterface
+{
+    public  function calculateArea();
+}
+
 class Rectangle implements AreaInterface
 {
     public $width;
@@ -198,11 +203,6 @@ class Circle implements  AreaInterface
         $area = $this->radius * $this->radius * pi();
         return $area;
     }
-}
-
-interface AreaInterface
-{
-    public  function calculateArea();
 }
 
 class AreaCalculator
@@ -239,6 +239,88 @@ results and without the dependent class knowing the actual type of the provided 
 
 This rule means that when one class depends upon another, the number 
 of members in the interface that is visible to the dependent class should be minimised.
+
+```php
+
+<?php
+
+interface workerInterface
+{
+    public  function work();
+    public  function  sleep();
+}
+
+
+class HumanWorker implements workerInterface
+{
+    public  function work()
+    {
+        var_dump('works');
+    }
+
+    public  function  sleep()
+    {
+        var_dump('sleep');
+    }
+
+}
+
+class AndroidWorker implements workerInterface
+{
+    public  function work()
+    {
+        var_dump('works');
+    }
+
+    public  function sleep()
+    {
+        // No need
+    }
+}
+
+```
+
+In the above code, AnodroidWorker nod need sleep, but the class have to immplement the sleep method because we know that all methods are abstract in interface. It breaks the Interface segregation law. How we can fix it please see the following code :
+
+```php
+<?php
+
+interface WorkAbleInterface
+{
+    public  function work();
+}
+
+interface SleepAbleInterface
+{
+    public  function  sleep();
+}
+
+
+class HumanWorker implements WorkAbleInterface, SleepAbleInterface
+{
+
+    public  function work()
+    {
+        var_dump('works');
+    }
+    public  function  sleep()
+    {
+        var_dump('sleep');
+    }
+
+}
+
+class AndroidWorker implements WorkAbleInterface
+{
+
+    public  function work()
+    {
+        var_dump('works');
+    }
+
+}
+
+```
 
 
 ## Dependency Inversion Principle :
