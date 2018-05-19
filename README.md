@@ -125,6 +125,105 @@ class SalesRepository
 Software entities (classes, modules, functions, etc.) be extendable without 
 actually changing the contents of the class you're extending. If we could follow this principle strongly enough, it is possible to then modify the behavior of our code without ever touching a piece of original code.
 
+Please look at the following code :
+
+```php
+<?php
+class Rectangle
+{
+    public $width;
+    public $height;
+    public function __construct($width, $height)
+    {
+        $this->width = $width;
+        $this->height = $height;
+    }
+}
+class Circle
+{
+    public $radius;
+    public function __construct($radius)
+    {
+        $this->radius = $radius;
+    }
+}
+class AreaCalculator
+{
+    public function calculate($shape)
+    {
+       
+        if ($shape instanceof Rectangle) {
+            $area = $shape->width * $shape->height;
+        } else {
+            $area = $shape->radius * $shape->radius * pi();
+        }
+       
+        return $area;
+    }
+}
+$circle = new Circle(5);
+$rect = new Rectangle(8,5);
+$obj = new AreaCalculator();
+echo $obj->calculate($circle);
+
+```
+
+Now if want to calculate area for Square we have to modify calculate method in AreaCalculator class. It breaks the openclosed principle. According to this princple we can not modify we can extend. So How we fix this problem see the following code :
+
+```php
+
+class Rectangle implements AreaInterface
+{
+    public $width;
+    public $height;
+    public function __construct($width, $height)
+    {
+        $this->width = $width;
+        $this->height = $height;
+    }
+    public  function calculateArea(){
+        $area = $this->height *  $this->width;
+        return $area;
+    }
+}
+  
+class Circle implements  AreaInterface
+{
+    public  $radius;
+    public function __construct($radius)
+    {
+        $this->radius = $radius;
+    }
+    public  function calculateArea(){
+        $area = $this->radius * $this->radius * pi();
+        return $area;
+    }
+}
+
+interface AreaInterface
+{
+    public  function calculateArea();
+}
+
+class AreaCalculator
+{
+    public function area($shape)
+    {
+        $area = 0;
+        $area = $shape->calculateArea();
+        return $area;
+    }
+}
+
+$circle = new Circle(5);
+$obj = new AreaCalculator();
+echo $obj->area($circle);
+
+```
+
+Now we can find square's area without modify AreaCalculator class.
+
+
 ### Liskov Substitution Principle :
 
 >Derived classes must be substitutable for their base classes.
