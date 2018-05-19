@@ -24,11 +24,9 @@ for beginners to understand. Let's go through each principle one by one:
 
 >A class should have one, and only one, reason to change.
 
-One class should only serve one purpose, this does not imply that each class 
-should have only have one method but they should all relate directly to the 
-responsibility of the class.All the methods and properties should all work towards the same goal. When a class serves for multiple purposes/ responsibility then it should be made into a new class.
+One class should only serve one purpose, this does not imply that each class should have only one method but they should all relate directly to the responsibility of the class. All the methods and properties should all work towards the same goal. When a class serves multiple purposes or responsibility then it should be made into a new class.
 
-Look the following code :
+Please look at the following code :
 
 ```php
 namespace Report;
@@ -47,7 +45,7 @@ class SalesReport
 
     protected function queryDBForSales($startDate, $endDate)
     {
-         // If we would update our persistence layer in the future,
+        // If we would update our persistence layer in the future,
         // we would have to do changes here too. <=> reason to change!
         return DB::table('sales')->whereBetween('created_at', [$startDate, $endDate])->sum('charge') / 100;
     }
@@ -63,9 +61,9 @@ class SalesReport
 
 Above class violates single responsibility principle. Why should this class be interested in the authenticated user? This is application logic! It should be moved to a controller.
 
-Next method is related to persistence layer.The persistence layer deals with persisting (storing and retrieving) data from a data store (such as a database, for example).So it is not the responsibility of this class.
+Next method is related to the persistence layer. The persistence layer deals with persisting (storing and retrieving) data from a data store (such as a database, for example).So it is not the responsibility of this class.
 
-Next method format is also not the responsibility of this class.Because we may need different format data such as XML, JSON, HTML etc.
+Next method format is also not the responsibility of this class. Because we may need different format data such as XML, JSON, HTML etc.
 
 So finally the refactored code will be described as below :
 
@@ -87,12 +85,14 @@ class SalesReport
     return $this->formatter->output($sales);
   }
 }
+
 // SalesOutputInterface
 namespace Report;
 interface SalesOutputInterface
 {
   public function output();
 }
+
 // HtmlOutput class
 namespace Report;
 class HtmlOutput implements SalesOutputInterface
@@ -102,6 +102,7 @@ class HtmlOutput implements SalesOutputInterface
     return '<h1>Sales: ' . $sales . '</h1>';
   }
 }
+
 // SalesRepository
 namespace Report\Repositories;
 use DB;
@@ -118,8 +119,7 @@ class SalesRepository
 
 >Entities should be open for extension, but closed for modification.
 
-Software entities (classes, modules, functions, etc.) be extendable without 
-actually changing the contents of the class you're extending. If we could follow this principle strongly enough, it is possible to then modify the behavior of our code without ever touching a piece of original code.
+Software entities (classes, modules, functions, etc.) be extendable without actually changing the contents of the class you're extending. If we could follow this principle strongly enough, it is possible to then modify the behavior of our code without ever touching a piece of original code.
 
 Please look at the following code :
 
@@ -162,7 +162,8 @@ $obj = new AreaCalculator();
 echo $obj->calculate($circle);
 ```
 
-Now if want to calculate area for Square we have to modify calculate method in AreaCalculator class. It breaks the openclosed principle. According to this princple we can not modify we can extend. So How we fix this problem see the following code :
+If we want to calculate the area for Square we have to modify calculate method in AreaCalculator class. It breaks the open-closed principle. According to this principle, we can not modify we can extend. So How we fix this problem see the following code :
+
 
 ```php
 interface AreaInterface
@@ -213,16 +214,16 @@ $obj = new AreaCalculator();
 echo $obj->area($circle);
 ```
 
-Now we can find square's area without modify AreaCalculator class.
+Now we can find square's area without modifying AreaCalculator class.
 
 
 ## Liskov Substitution Principle :
 
 >Derived classes must be substitutable for their base classes.
  
-It states that any implementation of an abstraction (interface) should be substitutable in any place that the abstraction is accepted. Basically it takes care that while coding using interfaces in our code, we not only have a contract of input that the interface receives but also the output returned by different Classes implementing that interface; they should be of same type.
+It states that any implementation of an abstraction (interface) should be substitutable in any place that the abstraction is accepted. Basically, it takes care that while coding using interfaces in our code, we not only have a contract of input that the interface receives but also the output returned by different Classes implementing that interface; they should be of the same type.
 
-Please look code snippet:
+A code snippet to show how violates LSP and how we can fix it :
 
 ```php
 interface LessonRepositoryInterface
@@ -265,8 +266,7 @@ class DbLessonRepository implements LessonRepositoryInterface
 
 >A Client should not be forced to implement an interface that it doesn't use.
 
-This rule means that when one class depends upon another, the number 
-of members in the interface that is visible to the dependent class should be minimised.
+This rule means that when one class depends upon another, the number of members in the interface that is visible to the dependent class should be minimized.
 
 ```php
 interface workerInterface
@@ -303,7 +303,7 @@ class AndroidWorker implements workerInterface
 }
 ```
 
-In the above code, AnodroidWorker nod need sleep, but the class have to immplement the sleep method because we know that all methods are abstract in interface. It breaks the Interface segregation law. How we can fix it please see the following code :
+In the above code, AnodroidWorker no needs sleep, but the class has to implement the sleep method because we know that all methods are abstract in the interface. It breaks the Interface segregation law. How we can fix it please see the following code :
 
 ```php
 interface WorkAbleInterface
@@ -373,16 +373,15 @@ class PasswordReminder
 
 ```
 
-There's a common misunderstanding that dependency inversion is simply another way to say 
-dependency injection. However, the two are not the same.In the above code Inspite of 
-Injecting MySQLConnection class in PasswordReminder class but it is depends on 
-MySQLConnection.
+There's a common misunderstanding that dependency inversion is simply another way to say dependency injection. However, the two are not the same.
+
+In the above code In spite of Injecting MySQLConnection class in PasswordReminder class but it depends on MySQLConnection.
 
 High-level module PasswordReminder should not depend on low-level module MySQLConnection.
 
-If we want to change connection from MySQLConnection to MongoDBConnection, we have to change hard coded constructor injection in PasswordReminder class.
+If we want to change the connection from MySQLConnection to MongoDBConnection, we have to change hard-coded constructor injection in PasswordReminder class.
 
-PasswordReminder class should depend upon on Abstractions not on concretions. But How can we do it ? Please see the following example :
+PasswordReminder class should depend upon on Abstractions, not on concretions. But How can we do it? Please see the following example :
 
 ```php
 interface ConnectionInterface
@@ -412,8 +411,8 @@ class PasswordReminder
 }
 ```
 
-In the above code we want to change connection from MySQLConnection to MongoDBConnection, 
-we no need to change constructor injection in PasswordReminder class. 
-Because here PasswordReminder class depends upon on Abstractions not on concretions.
+In the above code, we want to change the connection from MySQLConnection to MongoDBConnection, we no need to change constructor injection in PasswordReminder class. Because here PasswordReminder class depends upon on Abstractions, not on concretions.
 
-I hope I have kept this simple enough for developers to understand easily. Thanks for reading.
+I hope I have kept this simple enough for developers to understand easily. 
+
+Thanks for reading.
