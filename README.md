@@ -220,9 +220,32 @@ Now we can find square's area without modifying AreaCalculator class.
 
 ## Liskov Substitution Principle :
 
->Derived classes must be substitutable for their base classes.
+The Liskov Substitution principle was introduced by Barbara Liskov in her conference 
+keynote "Data abstraction" in 1987.Barbara Liskov and Jeannette Wing formulated 
+the principle succinctly in a 1994 paper as follows:
+
+>Let φ(x) be a property provable about objects x of type T. Then φ(y) should be true for objects y of type S where S is a subtype of T.
+
+
+The human-readable version repeats pretty much everything that Bertrand Meyer 
+already has said, but it relies totally on a type-system:
+
+
+>1. Preconditions cannot be strengthened in a subtype.
+>2. Postconditions cannot be weakened in a subtype.
+>3. Invariants of the supertype must be preserved in a subtype.
+
+Robert Martin made the definition sound more smoothly and concisely in 1996 :
+
+>Functions that use pointers of references to base classes must be able to use objects of derived classes without knowing it.
+
  
-It states that any implementation of an abstraction (interface) should be substitutable in any place that the abstraction is accepted. Basically, it takes care that while coding using interfaces in our code, we not only have a contract of input that the interface receives but also the output returned by different Classes implementing that interface; they should be of the same type.
+It states that any implementation of an abstraction (interface) should be 
+substitutable in any place that the abstraction is accepted. Basically, 
+it takes care that while coding using interfaces in our code, 
+we not only have a contract of input that the interface receives but also the 
+output returned by different Classes implementing that interface; they should be 
+of the same type.
 
 A code snippet to show how violates LSP and how we can fix it :
 
@@ -418,5 +441,4 @@ In the above code, we want to change the connection from MySQLConnection to Mong
 
 Thanks for reading.
 
-If you want more details you can watch this [video](https://laracasts.com/series/solid-principles-in-php)
 
