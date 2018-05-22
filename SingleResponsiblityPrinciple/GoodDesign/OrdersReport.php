@@ -1,5 +1,4 @@
 <?php
-
 namespace Report;
 
 use Report\Repositories\OrdersRepository;

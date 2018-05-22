@@ -1,5 +1,4 @@
 <?php
-
 namespace Report;
 
 interface OrdersOutPutInterface

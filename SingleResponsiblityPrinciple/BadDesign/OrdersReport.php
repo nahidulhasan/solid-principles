@@ -4,7 +4,6 @@ namespace Report;
 
 use DB;
 
-
 class OrdersReport
 {
     public function getOrdersInfo($startDate, $endDate)
