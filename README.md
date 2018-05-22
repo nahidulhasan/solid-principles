@@ -30,38 +30,29 @@ Please look at the following code :
 
 ```php
 namespace Report;
-use Auth;
 use DB;
-class SalesReport
+class OrdersReport
 {
-    public function between($startDate, $endDate)
+    public function getOrdersInfo($startDate, $endDate)
     {
-        if (! Auth::check()) {
-            throw new \Exception('Authentication required for reporting!');
-        }
-        $sales = $this->queryDBForSales($startDate, $endDate);
-        return $this->format($sales);
+        $orders = $this->queryDBForOrders($startDate, $endDate);
+        return $this->format($orders);
     }
-
-    protected function queryDBForSales($startDate, $endDate)
-    {
-        // If we would update our persistence layer in the future,
+    protected function queryDBForOrders($startDate, $endDate)
+    {   // If we would update our persistence layer in the future,
         // we would have to do changes here too. <=> reason to change!
-        return DB::table('sales')->whereBetween('created_at', [$startDate, $endDate])->sum('charge') / 100;
+        return DB::table('orders')->whereBetween('created_at', [$startDate, $endDate])->get();
     }
-
-    protected function format($sales)
-    {
-        // If we changed the way we want to format the output,
+    protected function format($orders)
+    {   // If we changed the way we want to format the output,
         // we would have to make changes here. <=> reason to change!
-        return '<h1>Sales: ' . $sales . '</h1>';
+        return '<h1>Orders: ' . $orders . '</h1>';
     }
 }
 ```
 
-Above class violates single responsibility principle. Why should this class be interested in the authenticated user? This is application logic! It should be moved to a controller.
-
-Next method is related to the persistence layer. The persistence layer deals with persisting (storing and retrieving) data from a data store (such as a database, for example).So it is not the responsibility of this class.
+Above class violates single responsibility principle. Why should this class retrieve data from database? It is related to the 
+persistence layer. The persistence layer deals with persisting (storing and retrieving) data from a data store (such as a database, for example).So it is not the responsibility of this class.
 
 Next method format is also not the responsibility of this class. Because we may need different format data such as XML, JSON, HTML etc.
 
@@ -69,47 +60,44 @@ So finally the refactored code will be described as below :
 
 ```php
 namespace Report;
-use Report\Repositories\SalesRepository;
-class SalesReport
+use Report\Repositories\OrdersRepository;
+class OrdersReport
 {
-  protected $repo;
-  protected $formatter;
-  public function __construct(SalesRepository $repo, SalesOutputInterface $formatter)
-  {
-    $this->repo = $repo;
-    $this->formatter = $formatter;
-  }
-  public function between($startDate, $endDate)
-  {
-    $sales = $this->repo->between($startDate, $endDate);
-    return $this->formatter->output($sales);
-  }
+	protected $repo;
+	protected $formatter;
+	public function __construct(OrdersRepository $repo, OrdersOutPutInterface $formatter)
+	{
+		$this->repo = $repo;
+		$this->formatter = $formatter;
+	}
+	public function getOrdersInfo($startDate, $endDate)
+	{
+		$orders = $this->repo->getOrdersWithDate($startDate, $endDate);
+		return $this->formatter->output($orders);
+	}
 }
 
-
 namespace Report;
-interface SalesOutputInterface
+interface OrdersOutPutInterface
 {
-  public function output();
+	public function output($orders);
 }
-
-
 namespace Report;
-class HtmlOutput implements SalesOutputInterface
+class HtmlOutput implements OrdersOutPutInterface
 {
-  public function output($sales)
-  {
-    return '<h1>Sales: ' . $sales . '</h1>';
-  }
+	public function output($orders)
+	{
+		return '<h1>Orders: ' . $orders . '</h1>';
+	}
 }
 
 namespace Report\Repositories;
 use DB;
-class SalesRepository
+class OrdersRepository
 {
-    protected function between($startDate, $endDate)
+    public function getOrdersWithDate($startDate, $endDate)
     {
-        return DB::table('sales')->whereBetween('created_at', [$startDate, $endDate])->sum('charge') / 100;
+        return DB::table('orders')->whereBetween('created_at', [$startDate, $endDate])->get();
     }
 }
 ```
