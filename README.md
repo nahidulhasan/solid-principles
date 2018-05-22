@@ -368,13 +368,13 @@ Or simply : Depend on Abstractions not on concretions
 ```php
 class MySQLConnection
 {
-/**
-   * db connection
-   */
-   public function connect()
-   {
+   /**
+    * db connection
+    */
+    public function connect()
+    {
       var_dump('MYSQL Connection');
-   }
+    }
 }
 
 class PasswordReminder
@@ -410,17 +410,17 @@ interface ConnectionInterface
 class DbConnection implements ConnectionInterface
 {
    /**
-   * db connection
-   */
-   public function connect()
-   {
+    * db connection
+    */
+    public function connect()
+    {
      var_dump('MYSQL Connection');
-   }
+    }
 }
 
 class PasswordReminder
 {
-    /**
+   /**
     * @var DBConnection
     */
     private $dbConnection;
