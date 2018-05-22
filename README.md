@@ -190,7 +190,7 @@ class Circle implements  AreaInterface
 
 class AreaCalculator
 {
-    public function area($shape)
+    public function calculate($shape)
     {
         $area = 0;
         $area = $shape->calculateArea();
@@ -200,7 +200,7 @@ class AreaCalculator
 
 $circle = new Circle(5);
 $obj = new AreaCalculator();
-echo $obj->area($circle);
+echo $obj->calculate($circle);
 ```
 
 Now we can find square's area without modifying AreaCalculator class.
