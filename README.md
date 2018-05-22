@@ -281,8 +281,7 @@ class DbLessonRepository implements LessonRepositoryInterface
 This rule means that  we should break our interfaces in many smaller ones, 
 so they better satisfy the exact needs of our clients.
 
-Similar to the Single Responsibility Principle, the goal of the Interface Segregation Principle is to 
-reduce the side effects and frequency of required changes by splitting the software into multiple, independent parts.
+Similar to the Single Responsibility Principle, the goal of the Interface Segregation Principle is to minimize the side consequences and repetition by dividing the software into multiple, independent parts.
 
 Let’s see an example :
 
