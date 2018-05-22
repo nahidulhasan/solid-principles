@@ -2,7 +2,7 @@
 
 class AreaCalculator
 {
-    public function area($shape)
+    public function calculate($shape)
     {
         $area = 0;
         $area = $shape->calculateArea();
