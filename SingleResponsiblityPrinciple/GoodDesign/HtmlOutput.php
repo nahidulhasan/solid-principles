@@ -3,11 +3,11 @@
 namespace Report;
 
 
-class HtmlOutput implements SalesOutputInterface
+class HtmlOutput implements OrdersOutPutInterface
 {
-	public function output($sales)
+	public function output($orders)
 	{
-		return '<h1>Sales: ' . $sales . '</h1>';
+		return '<h1>Sales: ' . $orders . '</h1>';
 	}
 
 }
