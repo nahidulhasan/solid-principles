@@ -278,7 +278,13 @@ class DbLessonRepository implements LessonRepositoryInterface
 
 >A Client should not be forced to implement an interface that it doesn't use.
 
-This rule means that when one class depends upon another, the number of members in the interface that is visible to the dependent class should be minimized.
+This rule means that  we should break our interfaces in many smaller ones, 
+so they better satisfy the exact needs of our clients.
+
+Similar to the Single Responsibility Principle, the goal of the Interface Segregation Principle is to 
+reduce the side effects and frequency of required changes by splitting the software into multiple, independent parts.
+
+Let’s see an example :
 
 ```php
 interface workerInterface

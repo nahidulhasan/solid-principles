@@ -25,7 +25,7 @@ class HumanWorker implements WorkAbleInterface, SleepAbleInterface
 
 }
 
-class AndroidWorker implements WorkAbleInterface
+class RobotWorker implements WorkAbleInterface
 {
 
     public  function work()
