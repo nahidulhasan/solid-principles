@@ -382,6 +382,7 @@ class PasswordReminder
      * @var MySQLConnection
      */
      private $dbConnection;
+     
      public function __construct(MySQLConnection $dbConnection) 
     {
       $this->dbConnection = $dbConnection;
@@ -423,6 +424,7 @@ class PasswordReminder
     * @var DBConnection
     */
     private $dbConnection;
+    
     public function __construct(ConnectionInterface $dbConnection)
     {
       $this->dbConnection = $dbConnection;
