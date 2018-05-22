@@ -15,9 +15,9 @@ class OrdersReport
 		$this->formatter = $formatter;
 	}
 
-	public function between($startDate, $endDate)
+	public function getOrdersInfo($startDate, $endDate)
 	{
-		$orders = $this->repo->getOrdersInfo($startDate, $endDate);
+		$orders = $this->repo->getOrdersWithDate($startDate, $endDate);
 
 		return $this->formatter->output($orders);
 	}

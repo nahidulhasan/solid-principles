@@ -15,7 +15,7 @@ class OrdersReport
     }
 
 
-    protected function queryDBForSales($startDate, $endDate)
+    protected function queryDBForOrders($startDate, $endDate)
     {
         return DB::table('orders')->whereBetween('created_at', [$startDate, $endDate])->get();
     }
