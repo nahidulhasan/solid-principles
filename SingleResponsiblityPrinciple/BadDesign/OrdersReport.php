@@ -1,6 +1,5 @@
 <?php
-
-namespace Report;
+namespace Demo;
 
 use DB;
 
