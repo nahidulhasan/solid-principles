@@ -307,7 +307,7 @@ class HumanWorker implements workerInterface
 
 }
 
-class AndroidWorker implements workerInterface
+class RobotWorker implements workerInterface
 {
     public  function work()
     {
@@ -321,7 +321,7 @@ class AndroidWorker implements workerInterface
 }
 ```
 
-In the above code, AnodroidWorker no needs sleep, but the class has to implement the sleep method because we know that all methods are abstract in the interface. It breaks the Interface segregation law. How we can fix it please see the following code :
+In the above code, RobotWorker no needs sleep, but the class has to implement the sleep method because we know that all methods are abstract in the interface. It breaks the Interface segregation law. How we can fix it please see the following code :
 
 ```php
 interface WorkAbleInterface
@@ -346,7 +346,7 @@ class HumanWorker implements WorkAbleInterface, SleepAbleInterface
     }
 }
 
-class AndroidWorker implements WorkAbleInterface
+class RobotWorker implements WorkAbleInterface
 {
     public  function work()
     {
