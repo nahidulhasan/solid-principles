@@ -29,7 +29,7 @@ One class should only serve one purpose, this does not imply that each class sho
 Please look at the following code :
 
 ```php
-namespace Report;
+namespace Demo;
 use DB;
 class OrdersReport
 {
