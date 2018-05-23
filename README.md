@@ -365,6 +365,9 @@ class RobotWorker implements WorkAbleInterface
 
 Or simply : Depend on Abstractions not on concretions
 
+By applying the Dependency Inversion the modules can be easily changed by other modules 
+just changing the dependency module.
+
 
 Please look at the following code :
 
