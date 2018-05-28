@@ -229,7 +229,7 @@ Robert Martin made the definition sound more smoothly and concisely in 1996 :
 
 >Functions that use pointers of references to base classes must be able to use objects of derived classes without knowing it.
 
-Or simply : Subclass/derived classes should be substitutable for their base/parent class.
+Or simply : Subclass/derived class should be substitutable for their base/parent class.
 
 It states that any implementation of an abstraction (interface) should be 
 substitutable in any place that the abstraction is accepted. Basically, 
