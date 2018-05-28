@@ -10,10 +10,10 @@ inflexible and more brittle, small changes in the software can result in bugs.
 For these reasons, we should follow SOLID Principles.
 
 
-It takes some time to understand, but coding to follow the principles that can greatly 
-improve code quality and even understanding of the most well-designed applications on the web.
+It takes some time to understand, but if you write code following the principles 
+it will improve code quality and will help to understand the most well-designed software.
 
-Understanding SOLID principles you have to know the use of the interface clearly.
+To understand SOLID principles, you have to know the use of the interface clearly.
 If your concept is not clear about interface then you can read this [doc](https://medium.com/@NahidulHasan/understanding-use-of-interface-and-abstract-class-9a82f5f15837).
 
 I'm going to try to explain SOLID Principles in simplest way so that it's easy 
@@ -229,7 +229,8 @@ Robert Martin made the definition sound more smoothly and concisely in 1996 :
 
 >Functions that use pointers of references to base classes must be able to use objects of derived classes without knowing it.
 
- 
+Or simply : Subclass/derived classes should be substitutable for their base/parent class.
+
 It states that any implementation of an abstraction (interface) should be 
 substitutable in any place that the abstraction is accepted. Basically, 
 it takes care that while coding using interfaces in our code, 
