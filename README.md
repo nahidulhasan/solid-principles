@@ -131,23 +131,23 @@ class Circle
     }
 }
 
-class AreaCalculator
+class CostManager
 {
     public function calculate($shape)
     {
-       
+        $costPerUnit = 1.5;
         if ($shape instanceof Rectangle) {
             $area = $shape->width * $shape->height;
         } else {
             $area = $shape->radius * $shape->radius * pi();
         }
-       
-        return $area;
+        
+        return $costPerUnit * $area;
     }
 }
 $circle = new Circle(5);
 $rect = new Rectangle(8,5);
-$obj = new AreaCalculator();
+$obj = new CostManager();
 echo $obj->calculate($circle);
 ```
 
@@ -190,18 +190,17 @@ class Circle implements  AreaInterface
     }
 }
 
-class AreaCalculator
+class CostManager
 {
-    public function calculate($shape)
+    public function calculate(AreaInterface $shape)
     {
-        $area = 0;
-        $area = $shape->calculateArea();
-        return $area;
+        $costPerUnit = 1.5;
+        $totalCost = $costPerUnit * $shape->calculateArea();
+        return $totalCost;
     }
 }
-
 $circle = new Circle(5);
-$obj = new AreaCalculator();
+$obj = new CostManager();
 echo $obj->calculate($circle);
 ```
 
