@@ -152,7 +152,7 @@ echo $obj->calculate($circle);
 ```
 
 If we want to calculate the area for Square we have to modify calculate method in
- AreaCalculator class. It breaks the open-closed principle. According to this principle, 
+ CostManager class. It breaks the open-closed principle. According to this principle, 
  we can not modify we can extend. So How we can fix this problem, please see the following code :
 
 
@@ -204,7 +204,7 @@ $obj = new CostManager();
 echo $obj->calculate($circle);
 ```
 
-Now we can find square's area without modifying AreaCalculator class.
+Now we can find square's area without modifying CostManager class.
 
 
 ## Liskov Substitution Principle :
