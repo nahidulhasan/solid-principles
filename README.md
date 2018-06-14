@@ -441,6 +441,8 @@ class PasswordReminder
 
 In the above code, we want to change the connection from MySQLConnection to MongoDBConnection, we no need to change constructor injection in PasswordReminder class. Because here PasswordReminder class depends upon on Abstractions, not on concretions.
 
+Hackernoon has published this article. if you’d like to read from the hackernoon blog site, please go to this [link](https://hackernoon.com/solid-principles-simple-and-easy-explanation-f57d86c47a7f).
+
 Thanks for reading.
 
 
