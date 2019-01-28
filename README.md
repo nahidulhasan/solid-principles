@@ -446,3 +446,8 @@ Hackernoon has published this article. if you’d like to read from the hackerno
 Thanks for reading.
 
 
+### License
+
+Open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+
+
