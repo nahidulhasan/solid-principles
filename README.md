@@ -395,7 +395,6 @@ class PasswordReminder
       $this->dbConnection = $dbConnection;
     }
 }
-
 ```
 
 There's a common misunderstanding that dependency inversion is simply another way to say dependency injection. However, the two are not the same.
