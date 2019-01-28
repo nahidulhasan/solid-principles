@@ -9,7 +9,6 @@ When the developer builds a software follow the bad design, the code can become
 inflexible and more brittle, small changes in the software can result in bugs. 
 For these reasons, we should follow SOLID Principles.
 
-
 It takes some time to understand, but if you write code following the principles 
 it will improve code quality and will help to understand the most well-designed software.
 
