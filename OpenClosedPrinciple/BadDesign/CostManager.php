@@ -14,3 +14,8 @@ class CostManager
         return $costPerUnit * $area;
     }
 }
+
+$circle = new Circle(5);
+$rect = new Rectangle(8,5);
+$obj = new CostManager();
+echo $obj->calculate($circle);

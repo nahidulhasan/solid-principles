@@ -30,7 +30,7 @@ class DbLessonRepository implements LessonRepositoryInterface
               - the return type is different
               - the consumer of this subclass and FileLessonRepository won't work identically
          */
-        // return Lesson::all();
+         //return Lesson::all();
 
         // to fix this
         return Lesson::all()->toArray();

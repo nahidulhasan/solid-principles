@@ -9,3 +9,7 @@ class CostManager
         return $totalCost;
     }
 }
+
+$circle = new Circle(5);
+$obj = new CostManager();
+echo $obj->calculate($circle);
