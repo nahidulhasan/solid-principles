@@ -1,4 +1,4 @@
-# SOLID Principles - dengan penjelasan yang mudah dan sederhana
+# SOLID Principles - dijelaskan dengan mudah dan sederhana
 
 "SOLID Principles" adalah sebuah "coding standard" yang harus dipahami secara matang
 konsepnya oleh semua developer untuk men-*develop* sebuah software dengan jalan yang tepat
