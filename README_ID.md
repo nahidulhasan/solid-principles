@@ -201,7 +201,7 @@ echo $obj->calculate($circle);
 
 Sekarang, kita bisa menghitung area persegi tanpa harus melakukan modifikasi terhadap *class* `CostManager`.
 
-*catatan: contoh diatassmal menggunakan `interface`.
+*catatan: contoh diatas menggunakan `interface`.
 
 
 ## Liskov Substitution Principle :
