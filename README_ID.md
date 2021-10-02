@@ -98,3 +98,110 @@ class OrdersRepository
     }
 }
 ```
+
+## Open-closed Principle :
+
+> Entitas harus *open* untuk *ekstension*, tetapi *closed* untuk modifikasi.
+
+Entitas dari *software* (*class*, *module*, *function*, dll.) harus bisa di *extend* tanpa harus mengubah konten dari *class* yang di*extend*. Jika kita menerapkan prinsip ini dengan kuat, maka mungkin untuk melakukan modifikasi perilaku dari kode yang kita miliki tanpa perlu menyentuh sedikitpun dari kode aslinya.
+
+Perhatikan contoh berikut ini:
+
+```php
+class Rectangle
+{
+    public $width;
+    public $height;
+    public function __construct($width, $height)
+    {
+        $this->width = $width;
+        $this->height = $height;
+    }
+}
+
+class Circle
+{
+    public $radius;
+    public function __construct($radius)
+    {
+        $this->radius = $radius;
+    }
+}
+
+class CostManager
+{
+    public function calculate($shape)
+    {
+        $costPerUnit = 1.5;
+        if ($shape instanceof Rectangle) {
+            $area = $shape->width * $shape->height;
+        } else {
+            $area = $shape->radius * $shape->radius * pi();
+        }
+        
+        return $costPerUnit * $area;
+    }
+}
+$circle = new Circle(5);
+$rect = new Rectangle(8,5);
+$obj = new CostManager();
+echo $obj->calculate($circle);
+```
+
+Jika kita ingin menggunakan `calculate()` untuk menghitung persegi (*Square*), kita harus melakukan modifikasi *method* yang ada di *class* `CostManager`. Ini melanggar prinsip "*Open-closed*". Menurut prinsip ini, kita tidak bisa melakukan modifikasi, kita hanya dapat meng-*extend*. Jadi bagaimana kita mengatasi masalah ini?
+Perhatikan kode berikut ini:
+
+```php
+interface AreaInterface
+{
+    public  function calculateArea();
+}
+
+class Rectangle implements AreaInterface
+{
+    public $width;
+    public $height;
+    public function __construct($width, $height)
+    {
+        $this->width = $width;
+        $this->height = $height;
+    }
+    public  function calculateArea(){
+        $area = $this->height *  $this->width;
+        return $area;
+    }
+}
+  
+class Circle implements  AreaInterface
+{
+    public  $radius;
+    public function __construct($radius)
+    {
+        $this->radius = $radius;
+    }
+    public  function calculateArea(){
+        $area = $this->radius * $this->radius * pi();
+        return $area;
+    }
+}
+
+class CostManager
+{
+    public function calculate(AreaInterface $shape)
+    {
+        $costPerUnit = 1.5;
+        $totalCost = $costPerUnit * $shape->calculateArea();
+        return $totalCost;
+    }
+}
+$circle = new Circle(5);
+$obj = new CostManager();
+echo $obj->calculate($circle);
+```
+
+Sekarang, kita bisa menghitung area persegi tanpa harus melakukan modifikasi terhadap *class* `CostManager`.
+
+*catatan: prinsip ini menggunakan `interface`.
+
+
+## Liskov Substitution Principle :
