@@ -205,3 +205,66 @@ Sekarang, kita bisa menghitung area persegi tanpa harus melakukan modifikasi ter
 
 
 ## Liskov Substitution Principle :
+
+Liskov Substitution Principle diperkenalkan oleh Barbara Liskov dalam acara konferensinya dengan *keynote* "Data Abstraction" pada tahun 1987. Barbara Liskov dan Jeannette Wing mem-formulasikan prinsip ini secara ringkas dalam sebuah makalah tahun 1994 sebagai berikut:
+
+>Let φ(x) be a property provable about objects x of type T. Then φ(y) should be true for objects y of type S where S is a subtype of T.
+
+
+Versi yang lebih mudah dibacanya mengulangi hampir semuanya, seperti yang dikatakan Bertrand Meyer, tetapi itu sepenuhnya bergantung pada `type-system`:
+
+>1. Preconditions cannot be strengthened in a subtype.
+>1. *Preconditions* tidak dapat diperkuat dalam *subtype*.
+
+>2. Postconditions cannot be weakened in a subtype.
+>2. *Postconditions* tidak dapat dilemahkan dalam *subtype*.
+
+>3. Invariants of the supertype must be preserved in a subtype.
+>3. *Invariants* dari *supertype* harus dipertahankan dalam *subtype*.
+
+Robert Martin membuat definisinya terdengar lebih lancar dan ringkas pada tahun 1996 :
+
+>Functions that use pointers of references to base classes must be able to use objects of derived classes without knowing it.
+>*Function* yang menguunakan *pointers of references* ke *class* utamanya, harus dapat menggunakan *object* dari *class* turunannya tanpa mengetahuinya.
+
+Atau sederhananya: *Subclass* atau *class* turunan, harus dapat disubstitusikan untuk kelas dasar/induk (*parent*) nya.
+
+Ini menyatakan bahwa setiap implementasi *abstraction* (*interface*) harus dapat diganti di mana pun abstraksinya diterima. Pada dasarnya, perlu diperhatikan saat kita menggunakan *interface* di dalam kode, kita tidak hanya memiliki kontrak input yang diterima *interface* tetapi juga output yang dikembalikan oleh *Class* yang berbeda yang mengimplementasikan *interface* itu; mereka seharusnya dari tipe yang sama.
+
+Sebuah cuplikan kode yang menunjukkan pelanggaran prinsip LSP (Liskov Substitution Principle) dan bagaimana cara memperbaikinya:
+
+```php
+interface LessonRepositoryInterface
+{
+    /**
+     * Fetch all records.
+     *
+     * @return array
+     */
+    public function getAll();
+}
+
+class FileLessonRepository implements LessonRepositoryInterface
+{
+    public function getAll()
+    {
+        // return through file system
+        return [];
+    }
+}
+
+class DbLessonRepository implements LessonRepositoryInterface
+{
+    public function getAll()
+    {
+        /*
+            Melanggar LSP karena:
+              - return type nya berbeda
+              - konsumen subclass ini dan FileLessonRepository tidak akan bekerja secara identik
+         */
+        // untuk memperbaikinya, seperti ini:
+        // return Lesson::all();
+        return Lesson::all()->toArray();
+    }
+}
+```
