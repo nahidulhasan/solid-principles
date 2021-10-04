@@ -268,3 +268,82 @@ class DbLessonRepository implements LessonRepositoryInterface
     }
 }
 ```
+
+## Interface Segregation Principle :
+
+>Klien tidak boleh dipaksa untuk mengimplementasikan *interface* yang tidak digunakannya. 
+
+Aturan ini berarti bahwa kita harus memecah *interface* kita menjadi banyak yang lebih kecil, sehingga mereka bisa memenuhi kebutuhan klien kita.
+
+Mirip dengan "Single Responsibility Principle", tujuan dari "Interface Segregation Principle" adalah untuk meminimalisir dari efek samping dan pengulangan dengan membagi *software* jadi beberapa bagian, yang independen.
+
+Mari kita lihat contoh berikut:
+
+```php
+interface workerInterface
+{
+    public  function work();
+    public  function  sleep();
+}
+
+class HumanWorker implements workerInterface
+{
+    public  function work()
+    {
+        var_dump('works');
+    }
+
+    public  function  sleep()
+    {
+        var_dump('sleep');
+    }
+
+}
+
+class RobotWorker implements workerInterface
+{
+    public  function work()
+    {
+        var_dump('works');
+    }
+
+    public  function sleep()
+    {
+        // No need
+    }
+}
+```
+
+Dari kode diatas, `RobotWorker` tidak butuh tidur, tetapi *class* tersebut harus mengimplementasikan *method* `sleep()` karena kita tahu bahwa semua *method* itu abstrak di *interface*. Itu melanggar prinsip "Interface Segregation". Bagaimana kita dapat memperbaikinya? coba lihat kode berikut ini:
+
+```php
+interface WorkAbleInterface
+{
+    public  function work();
+}
+
+interface SleepAbleInterface
+{
+    public  function  sleep();
+}
+
+class HumanWorker implements WorkAbleInterface, SleepAbleInterface
+{
+    public  function work()
+    {
+        var_dump('works');
+    }
+    public  function  sleep()
+    {
+        var_dump('sleep');
+    }
+}
+
+class RobotWorker implements WorkAbleInterface
+{
+    public  function work()
+    {
+        var_dump('works');
+    }
+}
+```
