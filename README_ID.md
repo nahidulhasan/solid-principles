@@ -269,6 +269,7 @@ class DbLessonRepository implements LessonRepositoryInterface
 }
 ```
 
+
 ## Interface Segregation Principle :
 
 >Klien tidak boleh dipaksa untuk mengimplementasikan *interface* yang tidak digunakannya. 
@@ -347,3 +348,94 @@ class RobotWorker implements WorkAbleInterface
     }
 }
 ```
+
+
+## Dependency Inversion Principle :
+
+>High-level modules tidak boleh bergantung pada low-level modules. Keduanya harus bergantung pada abstractions.
+
+>Abstraction tidak boleh bergantung pada detail. Detail harus bergantung pada abstractions.
+
+Atau sederhananya: Bergantung pada Abstractions bukan pada concretions
+
+Dengan menerapkan "Dependency Inversion", *modules* dapat dengan mudah diubah oleh *modules* lain hanya dengan mengubah *dependency* modul dan *High-level* modul tidak akan terpengaruh oleh perubahan apa pun pada Low-level modul.
+
+Perhatikan kode berikut:
+
+```php
+class MySQLConnection
+{
+   /**
+    * db connection
+    */
+    public function connect()
+    {
+      var_dump('MYSQL Connection');
+    }
+}
+
+class PasswordReminder
+{    
+    /**
+     * @var MySQLConnection
+     */
+     private $dbConnection;
+     
+     public function __construct(MySQLConnection $dbConnection) 
+    {
+      $this->dbConnection = $dbConnection;
+    }
+}
+```
+
+Ada kesalahpahaman umum bahwa *dependency inversion* hanyalah cara lain untuk mengatakan *dependency injection*. Namun, keduanya tidak sama.
+
+Dalam kode di atas Meskipun *class* `MySQLConnection` melakukan *Injecting* di *class* `PasswordReminder`, tetapi itu tergantung pada `MySQLConnection`.
+
+Modul *High-level* `PasswordReminder` tidak boleh bergantung pada modul  *low-level* `MySQLConnection`.
+
+Jika kita ingin mengubah koneksi dari `MySQLConnection` ke `MongoBDConnection`, kita harus mengubahnya secara "*hard-code*" *constructor injection* di dalam *class* `PasswordReminder`.
+
+*Class* `PasswordReminder` harus bergantung pada *Abstractions* (abstraksi), bukan pada *concretions* (paten). Tapi bagaimana caranya? Perhatikan contoh berikut ini:
+
+```php
+interface ConnectionInterface
+{
+   public function connect();
+}
+
+class DbConnection implements ConnectionInterface
+{
+   /**
+    * db connection
+    */
+    public function connect()
+    {
+     var_dump('MYSQL Connection');
+    }
+}
+
+class PasswordReminder
+{
+   /**
+    * @var DBConnection
+    */
+    private $dbConnection;
+    
+    public function __construct(ConnectionInterface $dbConnection)
+    {
+      $this->dbConnection = $dbConnection;
+    }
+}
+```
+
+Dalam kode diatas, kita ingin mengubah koneksi dari `MySQLConnection` ke `MongoDBConnection`, kita tidak perlu mengubah *constructor injection* di *class* `PasswordReminder`. Karena di *class* `PasswordReminder` bergantung pada *Abstractions*, bukan *concretion* (paten).
+
+Publikasi "Better Programming" sudah menerbitkan artikel ini. Jika anda menyukainya, anda bisa membacanya di halaman blog "Better Programming", silahkan menuju ke sini [link](https://medium.com/better-programming/solid-principles-simple-and-easy-explanation-f57d86c47a7f).
+
+Terima kasih sudah membaca.
+
+
+### License
+
+Perangkat lunak Open-sourced ini dilisensikan dibawah [MIT license](http://opensource.org/licenses/MIT)
