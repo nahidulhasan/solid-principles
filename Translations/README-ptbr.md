@@ -15,15 +15,6 @@ Vou tentar explicar os Princípios SOLID da maneira mais simples para que seja f
 para iniciantes entenderem. Vamos passar por cada princípio um por um:
 
 
-<details>
-<summary> Traduções:</summary>
-
-Original: [English]()
-
-</details>
-
-#
-
 ## Single Responsibility Principle (Princípio da Responsabilidade Única) :
 
 >Uma classe deve ter um, e apenas um, motivo para mudar.
@@ -271,16 +262,16 @@ class DbLessonRepository implements LessonRepositoryInterface
 ```
 
 
-## Interface Segregation Principle (Princípio de Segregação de Interface) :
+## Interface Segregation Principle :
 
->Um Cliente não deve ser forçado a implementar uma interface que não usa.
+>A Client should not be forced to implement an interface that it doesn't use.
 
-Esta regra significa que devemos quebrar nossas interfaces em muitas outras menores,
-para que satisfaçam melhor as necessidades exatas de nossos clientes.
+This rule means that we should break our interfaces in many smaller ones, 
+so they better satisfy the exact needs of our clients.
 
-Semelhante ao Princípio de Responsabilidade Única, o objetivo do Princípio de Segregação de Interface é minimizar as consequências colaterais e a repetição, dividindo o software em várias partes independentes.
+Similar to the Single Responsibility Principle, the goal of the Interface Segregation Principle is to minimize the side consequences and repetition by dividing the software into multiple, independent parts.
 
-Vejamos um exemplo :
+Let’s see an example :
 
 ```php
 interface workerInterface
@@ -312,12 +303,12 @@ class RobotWorker implements workerInterface
 
     public  function sleep()
     {
-        // Não há necessidade
+        // No need
     }
 }
 ```
 
-No código acima, RobotWorker não precisa dormir, mas a classe tem que implementar o método sleep porque sabemos que todos os métodos são abstratos na interface. Ele quebra a lei de segregação de Interface. Como podemos corrigi-lo, consulte o seguinte código :
+In the above code, RobotWorker no needs sleep, but the class has to implement the sleep method because we know that all methods are abstract in the interface. It breaks the Interface segregation law. How we can fix it please see the following code :
 
 ```php
 interface WorkAbleInterface
@@ -352,17 +343,19 @@ class RobotWorker implements WorkAbleInterface
 ```
 
 
-## Dependency Inversion Principle (Princípio da Inversão de Dependência) :
+## Dependency Inversion Principle :
 
-> Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações.
+> High-level modules should not depend on low-level modules. Both should depend on abstractions.
 
-> As abstrações não devem depender de detalhes. Os detalhes devem depender de abstrações.
+> Abstractions should not depend on details. Details should depend on abstractions.
 
-Ou simplesmente : Depender de abstrações e não de concreções
+Or simply : Depend on Abstractions not on concretions
 
-Aplicando a Inversão de Dependência os módulos podem ser facilmente trocados por outros módulos apenas alterar o módulo de dependência e o módulo de alto nível não será afetado por nenhuma alteração no módulo de baixo nível.
+By applying the Dependency Inversion the modules can be easily changed by other modules just 
+changing the dependency module and High-level module will not be affected by any changes to 
+the Low-level module.
 
-Por favor, veja o seguinte código :
+Please look at the following code :
 
 ```php
 class MySQLConnection
@@ -390,15 +383,15 @@ class PasswordReminder
 }
 ```
 
-Há um mal-entendido comum de que a inversão de dependência é simplesmente outra maneira de dizer injeção de dependência. No entanto, os dois não são iguais.
+There's a common misunderstanding that dependency inversion is simply another way to say dependency injection. However, the two are not the same.
 
-No código acima, apesar de injetar a classe MySQLConnection na classe PasswordReminder, mas depende de MySQLConnection.
+In the above code In spite of Injecting MySQLConnection class in PasswordReminder class but it depends on MySQLConnection.
 
-O módulo de alto nível PasswordReminder não deve depender do módulo de baixo nível MySQLConnection.
+High-level module PasswordReminder should not depend on low-level module MySQLConnection.
 
-Se quisermos alterar a conexão de MySQL Connection para MongoDB Connection, temos que alterar a injeção do construtor codificada na classe PasswordReminder.
+If we want to change the connection from MySQLConnection to MongoDBConnection, we have to change hard-coded constructor injection in PasswordReminder class.
 
-A classe PasswordReminder deve depender de abstrações, não de concreções. Mas como podemos fazer isso? Por favor, veja o exemplo a seguir :
+PasswordReminder class should depend upon on Abstractions, not on concretions. But How can we do it? Please see the following example :
 
 ```php
 interface ConnectionInterface
@@ -431,15 +424,15 @@ class PasswordReminder
 }
 ```
 
-No código acima, queremos alterar a conexão de MySQLConnection para MongoDBConnection, não precisamos alterar a injeção de construtor na classe PasswordReminder. Porque aqui a classe PasswordReminder depende de abstrações, não de concreções.
+In the above code, we want to change the connection from MySQLConnection to MongoDBConnection, we no need to change constructor injection in PasswordReminder class. Because here PasswordReminder class depends upon on Abstractions, not on concretions.
 
-A publicação Better Programming publicou este artigo. se você quiser ler o site do blog Better Programming, acesse este link [link](https://medium.com/better-programming/solid-principles-simple-and-easy-explanation-f57d86c47a7f).
+The Publication Better Programming has published this article. if you’d like to read from the Better Programming blog site, please go to this [link](https://medium.com/better-programming/solid-principles-simple-and-easy-explanation-f57d86c47a7f).
 
-Obrigado por ler.
+Thanks for reading.
 
 
-### Licença
+### License
 
-Software de código aberto licenciado sob a [MIT license](http://opensource.org/licenses/MIT)
+Open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
 
