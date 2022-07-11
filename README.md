@@ -18,6 +18,14 @@ If your concept is not clear about interface then you can read this [doc](https:
 I'm going to try to explain SOLID Principles in simplest way so that it's easy 
 for beginners to understand. Let's go through each principle one by one:
 
+<details>
+<summary> Translations:</summary>
+
+[Português-PT-br]()
+
+</details>
+
+#
 
 ## Single Responsibility Principle :
 
