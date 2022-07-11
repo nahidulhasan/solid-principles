@@ -18,7 +18,7 @@ para iniciantes entenderem. Vamos passar por cada princípio um por um:
 <details>
 <summary> Traduções:</summary>
 
-Original: [English]()
+Original: [English](https://github.com/nahidulhasan/solid-principles)
 
 </details>
 
